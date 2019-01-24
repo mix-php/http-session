@@ -7,8 +7,8 @@ use Mix\Helpers\RandomStringHelper;
 
 /**
  * Class Session
- * @package Mix\Http
  * @author LIUJIAN <coder.keda@gmail.com>
+ * @package Mix\Session
  */
 class Session extends Component
 {
