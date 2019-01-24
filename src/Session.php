@@ -109,14 +109,14 @@ class Session extends Component
     public function onRequestBefore()
     {
         parent::onRequestBefore();
-        // 载入session_id
-        $this->loadSessionId();
+        // 针对每个请求执行初始化
+        $this->initializeRequest();
     }
 
     /**
-     * 载入session_id
+     * 针对每个请求执行初始化
      */
-    public function loadSessionId()
+    public function initializeRequest()
     {
         $this->_sessionId = \Mix::$app->request->cookie($this->name);
         if (is_null($this->_sessionId)) {
@@ -137,6 +137,15 @@ class Session extends Component
             $this->_sessionId  = RandomStringHelper::randomAlphanumeric($this->_sessionIdLength);
             $this->_sessionKey = $this->keyPrefix . $this->_sessionId;
         } while ($this->handler->exists($this->_sessionKey));
+    }
+
+    /**
+     * 获取SessionId
+     * @return string
+     */
+    public function getSessionId()
+    {
+        return $this->_sessionId;
     }
 
     /**
@@ -201,15 +210,6 @@ class Session extends Component
     {
         $success = $this->handler->del($this->_sessionKey);
         return $success ? true : false;
-    }
-
-    /**
-     * 获取SessionId
-     * @return string
-     */
-    public function getSessionId()
-    {
-        return $this->_sessionId;
     }
 
 }
