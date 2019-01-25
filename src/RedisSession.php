@@ -106,9 +106,9 @@ class RedisSession extends Component
     /**
      * 请求前置事件
      */
-    public function onRequestBefore()
+    public function onBeforeRequest()
     {
-        parent::onRequestBefore();
+        parent::onBeforeRequest();
         // 针对每个请求执行初始化
         $this->initializeRequest();
     }
