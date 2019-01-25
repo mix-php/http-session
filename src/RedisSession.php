@@ -10,7 +10,7 @@ use Mix\Helpers\RandomStringHelper;
  * @author LIUJIAN <coder.keda@gmail.com>
  * @package Mix\Session
  */
-class Session extends Component
+class RedisSession extends Component
 {
 
     /**
