@@ -6,11 +6,11 @@ use Mix\Core\Component;
 use Mix\Helpers\RandomStringHelper;
 
 /**
- * Class Session
+ * Class RedisHttpSession
  * @author LIUJIAN <coder.keda@gmail.com>
  * @package Mix\Session
  */
-class RedisSession extends Component
+class RedisHttpSession extends Component
 {
 
     /**
