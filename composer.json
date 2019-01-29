@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Mix\\Http\\Session": "src/"
+      "Mix\\Http\\Session\\": "src/"
     }
   }
 }
