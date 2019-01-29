@@ -25,7 +25,7 @@ class RedisHandler extends Component implements HandlerInterface
     public $pool;
 
     /**
-     * 处理者
+     * 连接
      * @var \Mix\Redis\RedisConnectionInterface
      */
     public $connection;
