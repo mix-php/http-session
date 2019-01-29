@@ -1,5 +1,5 @@
 {
-  "name": "mix/session",
+  "name": "mix/http-session",
   "description": "MixPHP 框架模块 http://www.mixphp.cn",
   "type": "framework",
   "keywords": [
@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Mix\\Session\\": "src/"
+      "Mix\\Http\\Session": "src/"
     }
   }
 }
