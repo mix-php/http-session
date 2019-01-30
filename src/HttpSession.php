@@ -67,11 +67,11 @@ class HttpSession extends Component
     public $cookieHttpOnly = false;
 
     /**
-     * 请求前置事件
+     * 前置处理事件
      */
-    public function onBeforeRequest()
+    public function onBeforeInitialize()
     {
-        parent::onBeforeRequest();
+        parent::onBeforeInitialize();
         // 针对每个请求执行初始化
         $this->handler->initializeRequest();
     }
