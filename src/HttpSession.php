@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Session;
 
-use Mix\Core\Component;
+use Mix\Core\Component\Component;
 
 /**
  * Class HttpSession
