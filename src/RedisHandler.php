@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Session;
 
-use Mix\Core\Component\Component;
+use Mix\Core\Component\AbstractComponent;
 use Mix\Helpers\RandomStringHelper;
 
 /**
@@ -10,7 +10,7 @@ use Mix\Helpers\RandomStringHelper;
  * @package Mix\Http\Session
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class RedisHandler extends Component implements HandlerInterface
+class RedisHandler extends AbstractComponent implements HandlerInterface
 {
 
     /**
