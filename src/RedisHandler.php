@@ -63,7 +63,7 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     /**
      * 针对每个请求执行初始化
      */
-    public function initializeRequest()
+    public function beforeInitialize()
     {
         // 加载 SessionId
         if (!$this->loadSessionId()) {
@@ -112,22 +112,6 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     }
 
     /**
-     * 赋值
-     * @param $name
-     * @param $value
-     * @return bool
-     */
-    public function set($name, $value)
-    {
-        $success = $this->connection->hmset($this->_key, [$name => serialize($value)]);
-        $this->connection->expire($this->_key, $this->parent->maxLifetime);
-        if ($success) {
-            $this->setCookie();
-        }
-        return $success ? true : false;
-    }
-
-    /**
      * 设置 cookie
      * @return bool
      */
@@ -142,6 +126,22 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
             $this->parent->cookieSecure,
             $this->parent->cookieHttpOnly
         );
+    }
+
+    /**
+     * 赋值
+     * @param $name
+     * @param $value
+     * @return bool
+     */
+    public function set($name, $value)
+    {
+        $success = $this->connection->hmset($this->_key, [$name => serialize($value)]);
+        $this->connection->expire($this->_key, $this->parent->maxLifetime);
+        if ($success) {
+            $this->setCookie();
+        }
+        return $success ? true : false;
     }
 
     /**
@@ -163,17 +163,6 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     }
 
     /**
-     * 判断是否存在
-     * @param $name
-     * @return bool
-     */
-    public function has($name)
-    {
-        $exist = $this->connection->hexists($this->_key, $name);
-        return $exist ? true : false;
-    }
-
-    /**
      * 删除
      * @param $name
      * @return bool
@@ -192,6 +181,17 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     {
         $success = $this->connection->del($this->_key);
         return $success ? true : false;
+    }
+
+    /**
+     * 判断是否存在
+     * @param $name
+     * @return bool
+     */
+    public function has($name)
+    {
+        $exist = $this->connection->hexists($this->_key, $name);
+        return $exist ? true : false;
     }
 
 }

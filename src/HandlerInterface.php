@@ -13,7 +13,7 @@ interface HandlerInterface
     /**
      * 针对每个请求执行初始化
      */
-    public function initializeRequest();
+    public function beforeInitialize();
 
     /**
      * 加载 SessionId
@@ -34,44 +34,45 @@ interface HandlerInterface
     public function getSessionId();
 
     /**
-     * 赋值
-     * @param $name
-     * @param $value
-     * @return bool
-     */
-    public function set($name, $value);
-
-    /**
      * 设置 cookie
      * @return bool
      */
     public function setCookie();
 
     /**
-     * 取值
-     * @param null $name
-     * @return mixed|null
-     */
-    public function get($name = null);
-
-    /**
-     * 判断是否存在
-     * @param $name
+     * 赋值
+     * @param $key
+     * @param $value
      * @return bool
      */
-    public function has($name);
+    public function set($key, $value);
+
+    /**
+     * 取值
+     * @param null $key
+     * @return mixed|null
+     */
+    public function get($key = null);
+
 
     /**
      * 删除
-     * @param $name
+     * @param $key
      * @return bool
      */
-    public function delete($name);
+    public function delete($key);
 
     /**
      * 清除session
      * @return bool
      */
     public function clear();
+
+    /**
+     * 判断是否存在
+     * @param $key
+     * @return bool
+     */
+    public function has($key);
 
 }

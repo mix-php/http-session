@@ -73,7 +73,7 @@ class HttpSession extends AbstractComponent
     {
         parent::onBeforeInitialize();
         // 针对每个请求执行初始化
-        $this->handler->initializeRequest();
+        $this->handler->beforeInitialize();
     }
 
     /**
@@ -96,43 +96,33 @@ class HttpSession extends AbstractComponent
 
     /**
      * 赋值
-     * @param $name
+     * @param $key
      * @param $value
      * @return bool
      */
-    public function set($name, $value)
+    public function set($key, $value)
     {
-        return $this->handler->set($name, $value);
+        return $this->handler->set($key, $value);
     }
 
     /**
      * 取值
-     * @param null $name
+     * @param null $key
      * @return mixed|null
      */
-    public function get($name = null)
+    public function get($key = null)
     {
-        return $this->handler->get($name);
-    }
-
-    /**
-     * 判断是否存在
-     * @param $name
-     * @return bool
-     */
-    public function has($name)
-    {
-        return $this->handler->has($name);
+        return $this->handler->get($key);
     }
 
     /**
      * 删除
-     * @param $name
+     * @param $key
      * @return bool
      */
-    public function delete($name)
+    public function delete($key)
     {
-        return $this->handler->delete($name);
+        return $this->handler->delete($key);
     }
 
     /**
@@ -142,6 +132,16 @@ class HttpSession extends AbstractComponent
     public function clear()
     {
         return $this->handler->clear();
+    }
+
+    /**
+     * 判断是否存在
+     * @param $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return $this->handler->has($key);
     }
 
 }
