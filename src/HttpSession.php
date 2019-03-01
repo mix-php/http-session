@@ -108,7 +108,7 @@ class HttpSession extends AbstractComponent
     /**
      * 取值
      * @param null $key
-     * @return mixed|null
+     * @return mixed
      */
     public function get($key = null)
     {

@@ -130,13 +130,13 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
 
     /**
      * 赋值
-     * @param $name
+     * @param $key
      * @param $value
      * @return bool
      */
-    public function set($name, $value)
+    public function set($key, $value)
     {
-        $success = $this->connection->hmset($this->_key, [$name => serialize($value)]);
+        $success = $this->connection->hmset($this->_key, [$key => serialize($value)]);
         $this->connection->expire($this->_key, $this->parent->maxLifetime);
         if ($success) {
             $this->setCookie();
@@ -146,30 +146,30 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
 
     /**
      * 取值
-     * @param null $name
-     * @return mixed|null
+     * @param null $key
+     * @return mixed
      */
-    public function get($name = null)
+    public function get($key = null)
     {
-        if (is_null($name)) {
+        if (is_null($key)) {
             $result = $this->connection->hgetall($this->_key);
             foreach ($result as $key => $item) {
                 $result[$key] = unserialize($item);
             }
             return $result ?: [];
         }
-        $value = $this->connection->hget($this->_key, $name);
+        $value = $this->connection->hget($this->_key, $key);
         return $value === false ? null : unserialize($value);
     }
 
     /**
      * 删除
-     * @param $name
+     * @param $key
      * @return bool
      */
-    public function delete($name)
+    public function delete($key)
     {
-        $success = $this->connection->hdel($this->_key, $name);
+        $success = $this->connection->hdel($this->_key, $key);
         return $success ? true : false;
     }
 
@@ -185,12 +185,12 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
 
     /**
      * 判断是否存在
-     * @param $name
+     * @param $key
      * @return bool
      */
-    public function has($name)
+    public function has($key)
     {
-        $exist = $this->connection->hexists($this->_key, $name);
+        $exist = $this->connection->hexists($this->_key, $key);
         return $exist ? true : false;
     }
 
