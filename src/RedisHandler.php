@@ -3,7 +3,7 @@
 namespace Mix\Http\Session;
 
 use Mix\Core\Component\AbstractComponent;
-use Mix\Helpers\RandomStringHelper;
+use Mix\Helper\RandomStringHelper;
 
 /**
  * Class RedisHandler
