@@ -14,11 +14,6 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
 {
 
     /**
-     * @var \Mix\Http\Session\HttpSession
-     */
-    public $parent;
-
-    /**
      * 连接池
      * @var \Mix\Pool\ConnectionPoolInterface
      */
@@ -61,44 +56,42 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     }
 
     /**
-     * 针对每个请求执行初始化
-     */
-    public function beforeInitialize()
-    {
-        // 加载 SessionId
-        if (!$this->loadSessionId()) {
-            // 创建 session_id
-            $this->createSessionId();
-        }
-        // 延长 session 有效期
-        $this->connection->expire($this->_key, $this->parent->maxLifetime);
-    }
-
-    /**
      * 加载 SessionId
+     * @param $name
+     * @param $maxLifetime
      * @return bool
      */
-    public function loadSessionId()
+    public function loadSessionId($name, $maxLifetime)
     {
-        $sessionId = \Mix::$app->request->cookie($this->parent->name);
+        // 加载
+        $sessionId = \Mix::$app->request->cookie($name);
         if (is_null($sessionId)) {
             return false;
         }
         $this->_sessionId = $sessionId;
         $this->_key       = $this->keyPrefix . $this->_sessionId;
+        // 延长 session 有效期
+        $this->connection->expire($this->_key, $maxLifetime);
+        // 返回
         return true;
     }
 
     /**
      * 创建 SessionId
+     * @param $sessionIdLength
+     * @param $maxLifetime
      * @return bool
      */
-    public function createSessionId()
+    public function createSessionId($sessionIdLength, $maxLifetime)
     {
+        // 创建
         do {
-            $this->_sessionId = RandomStringHelper::randomAlphanumeric($this->parent->sessionIdLength);
+            $this->_sessionId = RandomStringHelper::randomAlphanumeric($sessionIdLength);
             $this->_key       = $this->keyPrefix . $this->_sessionId;
         } while ($this->connection->exists($this->_key));
+        // 延长 session 有效期
+        $this->connection->expire($this->_key, $maxLifetime);
+        // 返回
         return true;
     }
 
@@ -112,34 +105,32 @@ class RedisHandler extends AbstractComponent implements HandlerInterface
     }
 
     /**
-     * 设置 cookie
-     * @return bool
-     */
-    public function setCookie()
-    {
-        return \Mix::$app->response->setCookie(
-            $this->parent->name,
-            $this->getSessionId(),
-            $this->parent->cookieExpires,
-            $this->parent->cookiePath,
-            $this->parent->cookieDomain,
-            $this->parent->cookieSecure,
-            $this->parent->cookieHttpOnly
-        );
-    }
-
-    /**
      * 赋值
      * @param $key
      * @param $value
+     * @param $name
+     * @param $maxLifetime
+     * @param $cookieExpires
+     * @param $cookiePath
+     * @param $cookieDomain
+     * @param $cookieSecure
+     * @param $cookieHttpOnly
      * @return bool
      */
-    public function set($key, $value)
+    public function set($key, $value, $name, $maxLifetime, $cookieExpires, $cookiePath, $cookieDomain, $cookieSecure, $cookieHttpOnly)
     {
         $success = $this->connection->hmset($this->_key, [$key => serialize($value)]);
-        $this->connection->expire($this->_key, $this->parent->maxLifetime);
+        $this->connection->expire($this->_key, $maxLifetime);
         if ($success) {
-            $this->setCookie();
+            \Mix::$app->response->setCookie(
+                $name,
+                $this->getSessionId(),
+                $cookieExpires,
+                $cookiePath,
+                $cookieDomain,
+                $cookieSecure,
+                $cookieHttpOnly
+            );
         }
         return $success ? true : false;
     }

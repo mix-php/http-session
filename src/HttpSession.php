@@ -72,8 +72,11 @@ class HttpSession extends AbstractComponent
     public function onBeforeInitialize()
     {
         parent::onBeforeInitialize();
-        // 针对每个请求执行初始化
-        $this->handler->beforeInitialize();
+        // 加载 SessionId
+        if (!$this->handler->loadSessionId($this->name, $this->$maxLifetime)) {
+            // 创建 session_id
+            $this->handler->createSessionId($this->sessionIdLength, $this->maxLifetime);
+        }
     }
 
     /**
@@ -91,7 +94,7 @@ class HttpSession extends AbstractComponent
      */
     public function createSessionId()
     {
-        return $this->handler->createSessionId();
+        return $this->handler->createSessionId($this->sessionIdLength, $this->maxLifetime);
     }
 
     /**
@@ -102,7 +105,17 @@ class HttpSession extends AbstractComponent
      */
     public function set($key, $value)
     {
-        return $this->handler->set($key, $value);
+        return $this->handler->set(
+            $key,
+            $value,
+            $this->name,
+            $this->maxLifetime,
+            $this->cookieExpires,
+            $this->cookiePath,
+            $this->cookieDomain,
+            $this->cookieSecure,
+            $this->cookieHttpOnly
+        );
     }
 
     /**
