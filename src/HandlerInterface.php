@@ -11,21 +11,20 @@ interface HandlerInterface
 {
 
     /**
-     * 针对每个请求执行初始化
-     */
-    public function beforeInitialize();
-
-    /**
      * 加载 SessionId
+     * @param $name
+     * @param $maxLifetime
      * @return bool
      */
-    public function loadSessionId();
+    public function loadSessionId($name, $maxLifetime);
 
     /**
      * 创建 SessionId
+     * @param $sessionIdLength
+     * @param $maxLifetime
      * @return bool
      */
-    public function createSessionId();
+    public function createSessionId($sessionIdLength, $maxLifetime);
 
     /**
      * 获取 SessionId
@@ -34,18 +33,19 @@ interface HandlerInterface
     public function getSessionId();
 
     /**
-     * 设置 cookie
-     * @return bool
-     */
-    public function setCookie();
-
-    /**
      * 赋值
      * @param $key
      * @param $value
+     * @param $name
+     * @param $maxLifetime
+     * @param $cookieExpires
+     * @param $cookiePath
+     * @param $cookieDomain
+     * @param $cookieSecure
+     * @param $cookieHttpOnly
      * @return bool
      */
-    public function set($key, $value);
+    public function set($key, $value, $name, $maxLifetime, $cookieExpires, $cookiePath, $cookieDomain, $cookieSecure, $cookieHttpOnly);
 
     /**
      * 取值
