@@ -73,7 +73,7 @@ class HttpSession extends AbstractComponent
     {
         parent::onBeforeInitialize();
         // 加载 SessionId
-        if (!$this->handler->loadSessionId($this->name, $this->$maxLifetime)) {
+        if (!$this->handler->loadSessionId($this->name, $this->maxLifetime)) {
             // 创建 session_id
             $this->handler->createSessionId($this->sessionIdLength, $this->maxLifetime);
         }
