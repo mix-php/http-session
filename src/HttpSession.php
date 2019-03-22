@@ -14,7 +14,7 @@ class HttpSession extends AbstractComponent
 
     /**
      * 处理者
-     * @var RedisHandler
+     * @var \Mix\Http\Session\HttpSessionHandlerInterface
      */
     public $handler;
 
