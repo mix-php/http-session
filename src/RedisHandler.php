@@ -10,7 +10,7 @@ use Mix\Helper\RandomStringHelper;
  * @package Mix\Http\Session
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class RedisHandler extends AbstractComponent implements HandlerInterface
+class RedisHandler extends AbstractComponent implements HttpSessionHandlerInterface
 {
 
     /**
