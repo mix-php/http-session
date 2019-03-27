@@ -8,7 +8,7 @@ use Mix\Helper\RandomStringHelper;
 /**
  * Class RedisHandler
  * @package Mix\Http\Session
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class RedisHandler extends AbstractComponent implements HttpSessionHandlerInterface
 {

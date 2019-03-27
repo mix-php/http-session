@@ -5,7 +5,7 @@ namespace Mix\Http\Session;
 /**
  * Interface HttpSessionHandlerInterface
  * @package Mix\Http\Session
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 interface HttpSessionHandlerInterface
 {

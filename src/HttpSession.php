@@ -7,7 +7,7 @@ use Mix\Core\Component\AbstractComponent;
 /**
  * Class HttpSession
  * @package Mix\Http\Session
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class HttpSession extends AbstractComponent
 {
